@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shao Ning and Wesley's First Ever Valentine's Day</title>
+
+    <style>
+        @media (max-width: 768px) {
+            .jukebox, .form-container, .image-container img {
+                width: 90%;
+            }
+            .song-selector, #feedbackInput {
+                width: 100%;
+            }
+        }
+
+        .red {color:#ff0000; }
+        .blue {color:#0000ff; }
+        .green {color:#008000; }
+        .orange {color:#ffa500; }
+        .purple {color:#800080; }
+        .cyan {color:cyan; }
+
+        :root {
+            --primary-color: #ff6384;
+            --secondary-color: #f0f0f0;
+            --text-color: #f0f0f0;
+            --accent-color: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            text-align: center;
+            display: none;
+            background-image: url("Images/BG.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .visible {
+            display: block;
+        }
+
+        .jukebox {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 60%;
+            margin: 20px auto;
+        }
+
+        .jukebox-title {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .song-selector {
+            display: block;
+            margin: 15px auto;
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .audio-player {
+            width: 100%;
+        }
+
+        ul {
+            list-style-position: inside; /*Moves the bullet inside the list item's box, closer to the text*/
+            padding-left: 0;
+        }
+
+        #myBtn {
+            display: none; 
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: rgb(28, 224, 208);
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        button {
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .image-container {
+            text-align: center;
+        }
+
+        .image-container img {
+            display: inline-block; /*Makes images line up side by side*/
+            margin: 5px; /*Adds some space around the images*/
+            vertical-align: middle; /*Aligns images vertically in case they have different heights*/
+        }
+
+        #special-video-container {
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            max-width: 640px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        #special-video-container video {
+            width: 100%; /* Make the video responsive */
+            height: auto; /* Adjust height automatically */
+            border-radius: 10px; /* Optional: Rounded corners */
+        }
+
+        #emoji {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        #special-video-container:hover .emoji {
+            opacity: 1;
+        }
+
+        /* Responsive Design for the special video container */
+        @media (max-width: 768px) {
+            #special-video-container {
+                max-width: 90%;
+                padding: 10px;
+            }
+        }
+    </style>
+
+    <script>
+        //Function for song playlist
+        document.addEventListener('DOMContentLoaded', function() {
+        // Reset the select element to the placeholder option on page load
+        document.getElementById('songSelector').value = "";
+    
+        function changeSong() {
+            var player = document.getElementById('audioPlayer');
+            var selectedSong = document.getElementById('songSelector').value;
+            var source = document.getElementById('audioSource');
+    
+            if (selectedSong) {
+            source.src = selectedSong; // Update the source of the audio element
+            player.load(); // Load the new source
+            player.play(); // Play the song automatically
+            }
+        }
+        
+        // Attach the changeSong function to the songSelector element's onchange event
+        document.getElementById('songSelector').addEventListener('change', changeSong);
+    
+        // Initialize Back to Top button functionality
+        initBackToTopButton();
+        });
+    
+        //Function for toTop button
+        function initBackToTopButton() {
+        // Get the button
+        let mybutton = document.getElementById("myBtn");
+    
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() { scrollFunction(); };
+    
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+            } else {
+            mybutton.style.display = "none";
+            }
+        }
+    
+        // When the user clicks the button, scroll to the top
+        // Note: The button's onclick attribute in HTML already calls this function.
+        }
+    
+        // It's better to define this function globally if it's called from an inline onclick event
+        function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+        }
+
+        //Function to check password
+        function checkPassword() {
+            const password = prompt("Enter Password Below");
+            const correctPassword = "240923wendelynlovesfsn";
+
+            if (password == correctPassword) {
+                document.body.classList.add('visible');
+            } else {
+                alert("Incorrect Password");
+                checkPassword();
+            }
+        }
+
+        //Adjust the existing window.onload function
+        window.onload = function() {
+            checkPassword();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('special-video-container');
+            const emoji = document.getElementById('emoji');
+
+            container.addEventListener('mousemove', function(e) {
+                const bounds = container.getBoundingClientRect();
+                const x = e.clientX - bounds.left;
+                const y = e.clientY - bounds.top;
+                emoji.style.left = x + 'px';
+                emoji.style.top = y + 'px';
+                emoji.style.transform = 'none';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Other functions...
+
+            // Function to uniquely change the color of <li> elements
+            function uniqueLiColors() {
+                // Define an array of colors
+                const colors = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0'];
+                
+                // Select all <li> elements
+                const listItems = document.querySelectorAll('ul li');
+                
+                // Iterate over each <li> element and apply a unique color
+                listItems.forEach(function(item, index) {
+                    // Use the modulo operator to loop through colors array
+                    // This ensures that each <li> gets a color from the array, and repeats if there are more <li>s than colors
+                    const colorIndex = index % colors.length;
+                    // Apply the color to the current <li> element
+                    item.style.color = colors[colorIndex];
+                });
+            }
+
+            // Call the function to change colors
+            uniqueLiColors();
+
+            // Add this part for handling the click event on li elements
+            document.addEventListener('DOMContentLoaded', function() {
+                const listItems = document.querySelectorAll('ul li');
+
+                listItems.forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        // Remove 'clicked' class from all items
+                        listItems.forEach(function(item) {
+                            item.classList.remove('clicked');
+                        });
+                        // Add 'clicked' class to the clicked item
+                        this.classList.add('clicked');
+                    });
+                });
+            });
+        });
+    </script>
+  
+</head>
+
+<body>
+    <!-- Back to Top Button -->
+    <button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
+
+    <div class="image-container"><img src="Images/FavPic.jpg" height="500" width="500"></div>
+    <h2>WENDELYN'S ATTEMPT IN MAKING A GREAT 1ST VALENTINE'S DAY FOR SHAO NING!</h2>
+        
+        <div>
+            <h1><u>What would you like to see?</u></h1>
+            <ul>
+                <li class="red"><a href="#1">Happy Valentine's Day Shao Ning</a></li>
+                <li class="blue"><a href="#2">How It Started</a></li>
+                <li class="green"><a href="#3">Memorable Days Together</a></li>
+                <li class="orange"><a href="#4">Overseas Trips and Adventures</a></li>
+                <li class="purple"><a href="#5">Bubbles</a></li>
+                <li class="cyan"><a href="#6">Feedback</a></li>
+            </ul>
+        </div>
+
+        <div id="special-video-container">
+            <span id="emoji" class="emoji" style="user-select: none;">😍</span>
+            <video src="Videos/crazyBeautiful.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+        </div>
+        
+        <div class="jukebox">
+            <h2 class="jukebox-title"><u>What Vibes?</u></h2>
+            <select id="songSelector" onchange="changeSong()" class="song-selector">
+                <option value="" selected>Select A Song</option>
+                <option value="Audios\Agora Hills.mp3">SEDUCTIVE</option>
+                <option value="Audios\Taylor Swift - All Too Well (Taylor's Version) (Lyric Video).mp3">MEMORABLE</option>
+                <option value="Audios\@coldplay - Fix You (Lyrics).mp3">SAD</option>
+                <option value="Audios\Aquaman Official Soundtrack Everything I Need Film Version - Skylar Grey WaterTower.mp3">TOUCHED</option>
+                <option value="Audios\Canon in D (Pachelbel)Violin,Cello&Piano.mp3">CALMED</option>
+                <option value="Audios\Panic! At the Disco - High Hopes (Lyrics).mp3">HAPPY</option>
+                <option value="Audios\Bastille - Pompeii (Lyrics).mp3">NOSTALGIC</option>
+                <option value="Audios\Lizzy McAlpine - ceilings (Official Audio).mp3">VIBEY</option>
+                <option value="Audios\Heavenly - Cigarettes After Sex.mp3">I LIKE</option>
+                <option value="Audios\Can't Help Falling In Love Wedding Entrance Version by James Wong.mp3">I LOVE</option>
+            </select>
+
+            <audio id="audioPlayer" class="audio-player" controls>
+                <source src="" type="audio/mpeg" id="audioSource">
+            </audio>
+        </div>
+
+        <div id="1">
+            <h2><u>Happy Valentine's Day Shao Ning!</u></h2>
+                <div class="image-container">
+                    <img src="Images/shaoCNY.jpg" height="300" width="300">
+                    <img src="Images/snHooray.jpg" height="300" width="300">
+                    <img src="Images/shaoCuteCNY.jpg" height="300" width="300">
+                </div>
+                    <p>
+                        <blockquote>
+                            <b>Hooray! you found our website.</b>
+                            <br>
+                            <b>Message for FSN:</b> Thank you for planning 14th February, Valentine's Day 2024 which is our first ever. 
+                            <br>
+                            This is my first time making a website so please do bear with me. 
+                            <br>
+                            If there was one thing in my life that I am forever grateful for, it would have to be the fact that I was able to meet you.
+                            <br>
+                            Thanks for your continuous effort and dedication into our relationship I really  appreciate everything you do for me.
+                            <br>
+                            I apologise if sometimes I lack emotions and don't show appreciation to you. I am working on that!
+                            <br>
+                            You really make me a much better person and I promise to continue to give my best to you and our relationship. 
+                            <br>
+                            <b>Whatever we have will last!</b> I will make sure of it.  
+                        </blockquote> 
+                    </p>
+            <div class="image-container">
+            <img src="Images/MOTKissing.jpg" height="300" width="300">
+            <img src="Images/snWithCar.jpg" height="300" width="300">
+            <img src="Images/MODuckFace.jpg" height="300" width="300">
+            </div>
+        </div>
+
+        <div id="2">
+            <h2><u>How It Started</u></h2>
+                <h5>28th July 2023</h5>
+                    <blockquote>
+                        Wesley and Shao Ning saw each other for the 1st time.
+                        <br>
+                        Wesley thought she was a XMM as she had coloured contacts.
+                        <br>
+                        Unfortunately, they didn't speak much on that day. 
+                    </blockquote>
+
+                <h5>30th July 2023</h5>
+                    <blockquote>
+                        Wesley and Shao Ning was paired to be meal buddies together. <b>COUNT OUR LUCKY STARS!</b>
+                        <br>
+                        They vibed well during lunch when Shao Ning was eating her $2.50 cai fan and Wesley his $14 beef noodle.
+                        <br>
+                        Dinner was even better, because Shao Ning being the resourceful person she is managed to secure us a free
+                        meal at <b>GOPIZZA</b>. 
+                        <br>
+                        However, as soon as the job ended, they both just went their seperate ways with only a simple goodbye&#128589;
+                    </blockquote>
+                    
+                <h5>31st July 2023</h5>
+                    <div class="image-container"><img src="Images/HowItStarted.jpg" height="500" width="300"></div>
+                    <blockquote>
+                        On the 31st at 1417 hours. Shao Ning mustered the courage to actaully reach out to Wesley by sending him "WESLEY". 
+                        <br>
+                        This was the <b>THE INITIATION OF A NEWFOUND INTIMACY!&#128158;</b>
+                    </blockquote>
+                
+                <h5>10th September 2023</h5>
+                    <div class="image-container"><img src="Images/snSayThanksForConfession.jpg" height="500" width="300"></div>
+                    <blockquote>
+                        This was the day that Wesley finally decided to follow his heart and ask Shao Ning to start dating.
+                        <br>
+                        He had planned this event for a good week and even prepared a script as a guide to breeze him through this setting.
+                        <br>
+                        This was all Wesley could recall of how the conversation went:
+                        <br>
+                        <pre>
+    Wesley - "Do you by any chance have a boyfriend?"
+    Shao - "HUH? NO! WHY?&#128514;"
+    Wesley - "Do you currently like anyone?"
+    Shao - "HUH?&#128514;&#128514;&#128514;"
+                        </pre>
+                        In the end, Shao Ning said she will give an answer by the end of the month&#128529;.
+                    </blockquote>
+                
+                <h5>24th September 2023</h5>
+                    <div class="image-container"><img src="Images/snFinallySaidYes.jpg" height="500" width="300"></div>
+                    <blockquote>
+                        Wesley delivered egg tarts that his auntie made on this fateful day in a desperate
+                        attempt to meet Shao Ning.
+                        <br>
+                        As she told him that she was feeling overwhelmed as she needed to do 9 tasks by the end
+                        of the week. 
+                        <br>
+                        This was how Shao Ning said <b>"YES"</b>:
+                        <pre>
+    Shao - "I want to do a 1 of my task now"
+    Wesley - "What is it you need to do?"
+    Shao - "I am going to do it now!&#128527;"
+    Shao - "<b>LET'S DATE&#128563;</b>"
+    Wesley - "HUH? OH OK. Thank you."
+                        </pre>
+                        <b>The rest is history</b>
+                    </blockquote>
+        </div>
+
+        <div id="3">
+            <h2><u>Memorable Days Together</u></h2>
+                <h4>These are the dates that are most memorable to Wesley. He apologizes if he forgot any other key events</h4>
+                <h5>First Date</h5>
+                    <blockquote>
+                        <p>
+                            <b>27th September 2023</b>
+                            <br>
+                            Shao Ning brought Wesley to eat Al-Azhar at Beauty World for the first time&#128523;.
+                            <br>
+                            They then went to West Coast Park to walk and enjoy the view of Jurong Island. They had a heart to heart talk, only to be interrupted by period cramps&#128532;.
+                            <br>
+                            Wesley was too shy to hold Shao Ning's hand. Shao Ning then took the initiative to hold his hand&#128536;.
+                            <br>
+                            <b>Great First Date!</b> 
+                        </p>
+                    </blockquote>
+
+                <h5>Tufting and Clubbing</h5>
+                    <div class="image-container"><img src="Images/snAndWesleyTufting.jpg" height="300" width="300"></div>
+                    <blockquote>
+                        <p>
+                            <b>4th October 2023</b>
+                            <br>
+                            Wesley and Shao Ning went for their first ever tufting together. It was a truly humbling and fulfilled experience &#128516;.
+                            <br>
+                            After tufting, they went for dinner at <b>KOH GRILL SUSHI BAR</b> before splitting to meet their friends for pre-drinks&#127864;.
+                            <br>
+                            They then continued their night together in <b>PRISM</b> then <b>LUNAR</b>.
+                        </p>
+                    </blockquote>
+                
+                <h5>First Kiss</h5>
+                    <p>
+                        <blockquote>
+                            <b>7th October 2023</b>
+                            <br>
+                            Shao Ning went for her friends birthday at SKAI on that day.
+                            <br>
+                            She then met Wesley at ARK11 for her after party. After dancing for a good 2 hours,
+                            <br>
+                            Wesley really loved her fit and her look and went on to take her <b>FIRST KISS</b>&#128139;. 
+                        </blockquote>
+                    </p>
+                
+                <h5>First Official Date</h5>
+                    <video controls src="Videos/firstDate.MP4" height="300" width="300"></video>
+                    <img src="Images/VineYard.jpg" height="300" width="300">
+                    <p>
+                        <blockquote>
+                            <b>10th October 2023</b>
+                            <br>
+                            Wesley had arranged for dinner at VineYard @ HortPark. The food was mid but company was great.
+                            <br>
+                            After the dinner, they proceeded to walk to Creamier @ Gilman Barracks for ice cream.
+                            <br>
+                            Shao Ning then went on to meet Wesley's parents for the first time&#128170;. 
+                        </blockquote>
+                    </p>
+                
+                <h5>Sneaking into Winter Wonderland</h5>
+                    <video controls src="Videos/SneakingIntoWinterWonderland.MP4" height="300" width="300"></video>
+                    <img src="Images/snFace.jpg" height="300" width="300">
+                    <p>
+                        <blockquote>
+                            <b>8th December 2023</b>
+                            <br>
+                            Wesley and Shao Ning went on a date on this day and later decided they wanted to take a walk at Gardens By The Bay.
+                            <br>
+                            As they were heading home, Shao Ning being the terror that she is decided she wanted to sneak into Winter Wonderland&#10052;.
+                        </blockquote>
+                    </p>
+                
+                <h5>Actually Going for Winter Wonderland</h5>
+                    <video controls src="Videos/WinterWonderland.mp4" height="300" width="300"></video>
+                    <p>
+                        <blockquote>
+                            <b>14th December 2023</b>
+                            <br>
+                            Shao Ning was resourceful and managed to get free tickets to Winter Wonderland. 
+                            <br>
+                            She then brought Wesley to experience his first and most memorable Winter Wonderland&#9731;.
+                        </blockquote>
+                    </p>
+                
+                <h5>Wesley's Sister Wedding</h5>
+                    <video controls src="Videos/snTikTokD.MP4" height="300" width="300"></video>
+                    <video controls src="Videos/KidsAtWedding.mp4" height="300" width="300"></video>
+                    <div class="image-container"><img src="Images/WeddingChurch.jpg" height="300" width="300"></div>
+                    <p>
+                        <blockquote>
+                            <b>16th December 2023</b>
+                            <br>
+                            This was the day of Wesley's sister wedding. It was a super long day starting with Gate Crash, Church, Tea, Dinner then Dance.
+                            <br>
+                            Wesley really loved this day as Shao Ning was by his side for the whole day. Unfortunately, was cut short as next day he had to fly to Vietnam.
+                        </blockquote>
+                    </p>
+                
+                <h5>Pottery and New Year's Countdown</h5>
+                    <div class="image-container">
+                        <img src="Images/snPottery.jpg" height="300" width="300">
+                        <img src="Images/potteryOnNYE.jpg" height="300" width="300">
+                        <img src="Images/WeirdAddidasBag.jpg" height="300" width="300">
+                    </div>
+                    <p>
+                        <blockquote>
+                            <b>31st December 2023</b>
+                            <br>
+                            Shao Ning and Wesley went to pottery for the first time in their lives @ ARUDIO CERAMIC&#129716;.
+                            <br>
+                            They then went on to have dinner with Shao Ning's family before heading to Mt. Faber&#128507; for countdown and grapes&#127815;.
+                        </blockquote>
+                    </p>
+                
+                <h5>1st Golf Together</h5>
+                    <video controls src="Videos/snGolf.MP4" height="300" width="300"></video>
+                    <p>
+                        <blockquote>
+                            <b>24th January 2024</b>
+                            <br>
+                            This wasn't really the 1st per se. But it was the one that mattered more. 
+                            <br>
+                            It was pretty fulfilling as they both enjoyed the sport and could experience something they enjoyed together&#127948;. 
+                        </blockquote>
+                    </p>
+                
+                <h5>Marquee</h5>
+                    <video controls src="Videos/snWMarquee.MOV" height="300" width="300"></video>
+                    <p>
+                        <blockquote>
+                            <b>26th January 2024</b>
+                            <br>
+                            Their first time clubbing together as a <b>COUPLE</b>&#128107;.
+                        </blockquote>
+                    </p>
+                
+                <h5>Post ColdPlay Concert</h5>
+                    <div class="image-container">
+                        <img src="Images/snColdPlay.jpg" height="300" width="300">
+                        <img src="Images/snYaowarat.jpg" height="300" width="300">
+                    </div>
+                    <p>
+                        <blockquote>
+                            <b>27th January 2024</b>
+                            <br>
+                            After Wesley saw the countless number of Telebubbles Shao Ning took for him, he couldn't help his urge to see her. So he offered to pick her after the concert.
+                            <br>
+                            He then brought her and her bestie, Isabel to eat supper&#127858; and dessert&#127848;.
+                        </blockquote>
+                    </p>
+        </div>
+
+        <div id="4">
+
+            <h2><u>Overseas Trips and Adventures</u></h2>
+                <h4>As at 140224. &#129346; to many more!</h4>
+                <h3><u>Very First JB Trip</u></h3>
+                    <p>
+                        <blockquote>
+                            <b>19th September 2023</b>
+                            <br>
+                            We took a bus into JB for a day trip.
+                            <br>
+                            Then went on to eat at TASIXI HONG KONG DIM SUM&#129375;. Before proceeding to play one round of RUD GO KART&#128663;.
+                            <br>
+                            Then, went to NIMMIES to eat NASI LEMAK CROISSANT&#127834;&#129370;, where Shao Ning wanted to blow candle for Wesley.
+                            <br>
+                            They then walked to K-FRY to eat &#127833; & fried &#127831;. 
+                            <br>
+                            Wesley then made the <b>Biggest Mistake Of His Life</b> and saw Shao Ning off at the checkpoint when they were supposed to be together&#128545;.
+                            <br>
+                        </blockquote>
+                    </p>
+                
+                <h3><u>Vietnam</u></h3>
+                    <video controls src="Videos/VNBrosBBQFeeding.MP4" height="300" width="300"></video>
+                    <video controls src="Videos/VNsnSleeping.MOV" height="300" width="300"></video>
+                    <video controls src="Videos/VNLush.mp4" height="300" width="300"></video>
+                    <p>
+                        <blockquote>
+                            <b>19th - 23rd December 2023</b>
+                            <br>
+                            Vietnam&#127483;&#127475; was a trip highly anticipated and raved by Wesley and Shao Ning. 
+                            <br> 
+                            It was the first time Shao Ning was travelling overseas&#128748; with friends and Boyfriend&#128102; and Wesley's first full boy's trip&#128713; with Girlfriend&#128120;.
+                            <br>
+                            Wesley flew first on the 17th of December 2023 to &#127483;&#127475; as Shao Ning had prior plans with her family&#128106; but was cancelled due to unforeseen circumstances&#128542;.
+                            <br>
+                            On the 19th, Shao Ning experienced flying&#9992; solo for the first time in her life to meet Wesley and pals at Ho Chi Minh City&#127483;&#127475;. 
+                            <br>
+                            The following nights were as follows:
+                            <pre>
+    <b>1st Night:</b> Went for dinner at 4P Pizza&#127829;, Japan walking street&#127471;&#127477; to walk off the coma and digest before heading for a Shiatsu massage&#128134;. 
+                Finally ended it off with 5KU grilled octopus&#128025;.
+    <img src="vnImages/vnShiatsuMassage.jpg" height="300" width="300"><img src="vnImages/5KUocto.jpg" height="300" width="300"><img src="vnImages/VN5KU.jpg" height="300" width="300">
+    
+    <b>2nd Day:</b> Went for coffee&#9749; run in the morning, before having eggs&#129370; and bread&#127838; for lunch.
+                We then walked around Takashimaya&#127980; and Ben Thanh market&#x1F6CD; after before going to Cafe Apartments&#127970;. 
+                After, we headed to New Playgrounds to do some retail therapy&#128717; before ending the day with dinner at BRO's BBQ&#129385;. 
+    <img src="vnImages/vnMorningCoffee.jpg" height="300" width="300"><img src="vnImages/vn0.5@Bread.jpg" height="300" width="300"><img src="vnImages/vnBread&Eggs.jpg" height="300" width="300">
+    <img src="vnImages/vnAboveBread.jpg" height="300" width="300"><img src="vnImages/vnCafeApart.jpg" height="300" width="300"><img src="vnImages/vnNewPlayground.jpg" height="300" width="300">
+    <img src="vnImages/vnBreadDog.jpg" height="300" width="300"><img src="vnImages/vnBrosBBQ.jpg" height="300" width="300">
+    
+    <b>3rd Day:</b> Headed out in the morning for snails&#x1F40C; before heading to do more retail therapy at Tobi Regular&#x1F455; street. 
+                After, we headed to eat Piper LotLot&#x1F356; before heading to the Vietnam War Musuem&#x2694;&#x1F3AA; for an insightful recap of history.
+                We then visited the supermarket&#x1F3EA; before heading home to proceed with our Potluck dinner&#x1F372; and Secret Santa&#x1F385;.
+                After our festive vibes dissipated, we then headed to Bui Vien for a drink&#x1F37A; accompied with balloon&#x1F388; and a BBQ supper&#x1F357;. 
+    <img src="vnImages/vnSnail.jpg" height="300" width="300"><img src="vnImages/vnSnails0.5.jpg" height="300" width="300"><img src="vnImages/vnPiperLotLot.jpg" height="300" width="300">
+    <img src="vnImages/vnPotluckDinner.jpg" height="300" width="300"><img src="vnImages/vnBuiVienGP.jpg" height="300" width="300">
+    <video src="vnVideos/vnPotluckDinner.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video><video src="vnVideos/vnSecretSanta.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video><video src="vnVideos/vnBuiVien.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+    
+    <b>4th Day:</b> Went for a different breakfast this morning, Avocado Toast&#x1F35E; with Vietnamese Egg Coffee&#x1F95A;&#x2615;.
+                    After, went on to get Cow Organ Soup&#x1F372; and dessert&#x1F370; before heading to Banh Mi Hyunh Hoa to try the best Banh Mi&#x1F96A; in our lives.
+                    One pal, Derrick forgot to bring his phone&#x1F4F1; the entire day and was lost while we were chilling in starbucks&#x2615;.
+                    We then later met him at Gom Saigon which was a pottery place&#x1F3FA;. 
+                    For dinner, we had another potluck and ate Tang Yuan&#x1F361; as it was Tang Yuan Festival. 
+                    After filling up, we then headed for a beer at a bar before going to LUSH&#x1F377; to end the night and the trip. 
+        <img src="vnImages/vnToast.jpg" height="300" width="300"><img src="vnImages/vnCowOrganSoup.jpg" height="300" width="300"><img src="vnImages/vnBanhMi.jpg" height="300" width="300">
+        <img src="vnImages/vnGom.jpg" height="300" width="300"><img src="vnImages/vnTangYuan.jpg" height="300" width="300"><img src="vnImages/vnSnWBall.jpg" height="300" width="300">
+        <video src="vnVideos/vnLushLogo.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+
+    <b>5th Day:</b> Our final day in Vietnam&#x1F1FB;&#x1F1F3; started with a local breakfast Com Tam&#x1F35A;. 
+                    After which, we headed to the airport&#x1F6EB; for our flight&#x2708;&#xFE0F; back home&#x1F3E0;. 
+                    <img src="vnImages/vnComTam.jpg" height="300" width="300"><img src="vnImages/vnComTamPOV.jpg" height="300" width="300"><img src="vnImages/vnHomed.jpg" height="300" width="300">
+                            </pre>
+                        </blockquote>
+                    </p>
+                
+                <h3><u>Second Trip to JB</u></h3>
+                    <div class="image-container"><img src="Images/snOrientalKopi.jpg" height="300" width="300"></div>
+                    <p>
+                        <blockquote>
+                            <b>8th January 2024</b>
+                            <br>
+                            We drove into JB in the early afternoon. Heading to SouthKey, Oriental Kopi&#x2615; for lunch and shopping&#x1F6CD;.
+                            <br>
+                            Afterwards, we went to get a 1 hour massage&#x1F486; before going to KSL to find 鸡蛋糕&#x1F370; by walking the mall&#x1F3E2; and the night market&#x1F6D2;.
+                            <br>
+                            Then had Rosmerah Nasi Lemak&#x1F35A; for dinner before racing at RUD Go-Kart&#x1F3CE; and heading home&#x1F3E0;. 
+                        </blockquote>
+                    </p>
+                
+                <h3><u>Third Trip to JB</u></h3>
+                    <p>
+                        <blockquote>
+                            <b>31st January 2024</b>
+                            <br>
+                            Went into JB via Bus as Miss Foo wanted to purchase stuff and do her nails&#x1F485;.
+                            <br>
+                            They walked around JB Sentral for almost 2 hours waiting for her HDL&#x1F372; manicure appointment but in the end had to go someplace else for manicure. 
+                            <br>
+                            They then proceeded to Paradigm mall where Shao Ning went on to buy her gorgeous shoes&#x1F460; then after to Sutera HDL to do manicure.
+                            <br> 
+                            After getting her nails done, they had LALA Hotpot&#x1F41A; for dinner before heading back to Singapore&#x1F1F8;&#x1F1EC;. 
+                        </blockquote>
+                    </p>
+        </div>
+
+        <div id="5">
+            <h2><u>Bubbles</u></h2>
+                <h3>Some Memorable Telebubbles</h3>
+                <video src="Videos/snUUU.MP4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snCPFC.MP4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snAHF.MP4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snCPVLVD.MP4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snMBSPS.MP4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snSB.MP4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snR.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snSGB.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snThrowItBack.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snProperTIB.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snAngst.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/snPrettyEyes.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/shaoCNY1.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/shaoCNY2.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/shaoCNY3.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+                <video src="Videos/shaoCNYEve.mp4" type="video/MP4" height="300" width="300" autoplay loop muted></video>
+               <h4>Anticipating Many More</h4>
+        </div>
+
+        <div id="6">
+            <h2><u>Feedback</u></h2>
+            <div class="form-container">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc9764d9varK_66GKmtFijl_RqK3U_Npusc4ybj9oNOcl0EpA/viewform?embedded=true" width="650" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+        </div>
+        
+</body>
+</html>
